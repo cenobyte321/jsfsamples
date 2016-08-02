@@ -23,7 +23,6 @@ public class BackingBean {
 
     @PostConstruct
     public void init(){
-        service.init();
         parents = service.findParents();
     }
 
