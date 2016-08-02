@@ -26,7 +26,7 @@
 
 
         <p:outputPanel id="display">
-            <p:dataList value="#{backingBean.selectedChildren}" var="sn" emptyMessage="No children selected">
+            <p:dataList value="#{backingBean.globalSelectedChildren}" var="sn" emptyMessage="No children selected">
                 #{sn.name}
             </p:dataList>
         </p:outputPanel>

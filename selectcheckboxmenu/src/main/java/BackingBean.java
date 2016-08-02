@@ -4,6 +4,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ManagedBean
 @ViewScoped
@@ -12,6 +13,10 @@ public class BackingBean {
     private List<Parent> parents = new ArrayList<>();
     private List<Child> children = new ArrayList<>();
     private List<Child> selectedChildren = new ArrayList<>();
+
+
+
+    private List<Child> globalSelectedChildren = new ArrayList<>();
     private Parent selectedParent = new Parent();
 
     @Inject
@@ -30,10 +35,14 @@ public class BackingBean {
         }
 
         children = service.findChildrenByParent(getSelectedParent());
+        selectedChildren = globalSelectedChildren.stream().filter(c -> c.getParent().equals(selectedParent)).collect(Collectors.toList());
+        System.out.println(selectedChildren.size());
     }
 
     public void selectedSonChanged(){
         System.out.println(selectedChildren.size());
+        globalSelectedChildren = globalSelectedChildren.stream().filter(c -> !c.getParent().equals(selectedParent)).collect(Collectors.toList());
+        globalSelectedChildren.addAll(selectedChildren);
     }
 
     public List<Parent> getParents() {
@@ -66,5 +75,13 @@ public class BackingBean {
 
     public void setSelectedParent(Parent selectedParent) {
         this.selectedParent = selectedParent;
+    }
+
+    public List<Child> getGlobalSelectedChildren() {
+        return globalSelectedChildren;
+    }
+
+    public void setGlobalSelectedChildren(List<Child> globalSelectedChildren) {
+        this.globalSelectedChildren = globalSelectedChildren;
     }
 }
