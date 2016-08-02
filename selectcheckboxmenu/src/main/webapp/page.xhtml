@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+<h:form id="selectOne">
+    <p:messages autoUpdate="true" />
+
+        <h:outputLabel for="parents" value="Parents:" />
+        <p:selectOneMenu converter="#{parentConverter}" id="parents" value="#{backingBean.selectedParent}">
+            <p:ajax update="children" listener="#{backingBean.parentChanged}" />
+            <f:selectItem noSelectionOption="true" value="#{null}" itemLabel="None" />
+            <f:selectItems value="#{backingBean.parents}" var="p" itemLabel="#{p.name}" itemValue="#{p}" />
+        </p:selectOneMenu>
+
+
+        <h:outputLabel for="children" value="Children:" />
+
+        <p:selectCheckboxMenu converter="#{childConverter}"  id="children"
+                              value="#{backingBean.selectedChildren}"
+                              label="Children" filter="true" filterMatchMode="startsWith">
+            <p:ajax update="display" listener="#{backingBean.selectedSonChanged}" />
+            <f:selectItems value="#{backingBean.children}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+        </p:selectCheckboxMenu>
+
+
+        <p:outputPanel id="display">
+            <p:dataList value="#{backingBean.selectedChildren}" var="sn" emptyMessage="No children selected">
+                #{sn.name}
+            </p:dataList>
+        </p:outputPanel>
+
+        <p:commandButton value="Submit" update="display, selectOne" />
+
+</h:form>
+
+</h:body>
+</html>
