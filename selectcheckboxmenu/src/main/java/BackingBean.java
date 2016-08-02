@@ -1,13 +1,9 @@
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @ManagedBean
 @ViewScoped
@@ -39,9 +35,6 @@ public class BackingBean {
     public void selectedSonChanged(){
         System.out.println(selectedChildren.size());
     }
-
-
-
 
     public List<Parent> getParents() {
         return parents;
